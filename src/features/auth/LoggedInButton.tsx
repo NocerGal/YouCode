@@ -67,13 +67,18 @@ export default function LoggedInButton(props: LoggedInButton) {
             <AlertDialogCancel asChild>
               <Button variant="secondary">Cancel</Button>
             </AlertDialogCancel>
-            <Button variant="destructive">
-                {mutation.isPending ? (
-                    <Loader className='mr-2' size={12}/>) : (
-                        <LogIn className='mr-2' size={12}/>
-                    )
-                )}
-                Logout</Button>
+            <Button
+              variant="destructive"
+              disabled={mutation.isPending}
+              onClick={() => mutation.mutate()}
+            >
+              {mutation.isPending ? (
+                <Loader className="mr-2" size={12} />
+              ) : (
+                <LogOut className="mr-2" size={12} />
+              )}
+              Logout
+            </Button>
           </AlertDialogFooter>
         </AlertDialogContent>
       </AlertDialog>
