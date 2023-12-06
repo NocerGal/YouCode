@@ -1,4 +1,4 @@
-'user client';
+'use client';
 
 import {
   AlertDialog,
@@ -20,7 +20,7 @@ import {
 import Loader from '@/components/ui/loader';
 import { useMutation } from '@tanstack/react-query';
 
-import { LogOut } from 'lucide-react';
+import { LogIn, LogOut } from 'lucide-react';
 import { Session } from 'next-auth';
 import { signOut } from 'next-auth/react';
 import React from 'react';
@@ -29,9 +29,7 @@ type LoggedInButton = {
 };
 export default function LoggedInButton(props: LoggedInButton) {
   const mutation = useMutation({
-    mutationFn: async () => {
-      signOut();
-    },
+    mutationFn: async () => signOut(),
   });
 
   return (
@@ -69,15 +67,11 @@ export default function LoggedInButton(props: LoggedInButton) {
             <AlertDialogCancel asChild>
               <Button variant="secondary">Cancel</Button>
             </AlertDialogCancel>
-            <Button
-              variant="destructive"
-              disabled={mutation.isPending}
-              onClick={() => mutation.mutate()}
-            >
+            <Button variant="destructive">
               {mutation.isPending ? (
                 <Loader className="mr-2" size={12} />
               ) : (
-                <LogOut className="mr-2" size={12} />
+                <LogIn className="mr-2" size={12} />
               )}
               Logout
             </Button>
