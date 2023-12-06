@@ -19,7 +19,8 @@ import {
 } from '@/components/ui/dropdown-menu';
 import Loader from '@/components/ui/loader';
 import { useMutation } from '@tanstack/react-query';
-import { LogIn, LogOut } from 'lucide-react';
+
+import { LogOut } from 'lucide-react';
 import { Session } from 'next-auth';
 import { signOut } from 'next-auth/react';
 import React from 'react';
@@ -32,6 +33,7 @@ export default function LoggedInButton(props: LoggedInButton) {
       signOut();
     },
   });
+
   return (
     <DropdownMenu>
       <AlertDialog>
