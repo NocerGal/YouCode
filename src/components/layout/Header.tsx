@@ -1,17 +1,7 @@
-// src/components/layout/Header.tsx
 import { SiteConfig } from '@/lib/site-config';
 import Link from 'next/link';
 import { ThemeToggle } from '../ThemeToggle';
 import { Typography } from '../ui/Typography';
-import {
-  DropdownMenu,
-  DropdownMenuTrigger,
-  DropdownMenuGroup,
-  DropdownMenuPortal,
-  DropdownMenuContent,
-  DropdownMenuItem,
-} from '../ui/dropdown-menu';
-import { Github } from 'lucide-react';
 import AuthButton from '@/features/auth/AuthButton';
 
 export function Header() {
@@ -25,7 +15,7 @@ export function Header() {
         </div>
 
         <div className="flex flex-1 items-center justify-end space-x-4">
-          <nav className="flex items-center space-x-1">
+          <nav className="flex items-center gap-2 space-x-1">
             <AuthButton />
             <ThemeToggle />
           </nav>

@@ -15,14 +15,16 @@ import {
   DropdownMenu,
   DropdownMenuContent,
   DropdownMenuItem,
+  DropdownMenuSeparator,
   DropdownMenuTrigger,
 } from '@/components/ui/dropdown-menu';
 import Loader from '@/components/ui/loader';
 import { useMutation } from '@tanstack/react-query';
 
-import { LogIn, LogOut } from 'lucide-react';
+import { LogIn, LogOut, User2 } from 'lucide-react';
 import { Session } from 'next-auth';
 import { signOut } from 'next-auth/react';
+import Link from 'next/link';
 import React from 'react';
 type LoggedInButton = {
   user: Session['user'];
@@ -50,13 +52,20 @@ export default function LoggedInButton(props: LoggedInButton) {
           </Button>
         </DropdownMenuTrigger>
         <DropdownMenuContent>
+          <DropdownMenuItem asChild>
+            <Link href="/account">
+              <User2 className="mr-2" size={12} />
+              Account
+            </Link>
+          </DropdownMenuItem>
+          <DropdownMenuSeparator />
           <AlertDialogTrigger asChild>
             <DropdownMenuItem>
               <LogOut className="mr-2" size={12} />
               Logout
             </DropdownMenuItem>
           </AlertDialogTrigger>
-        </DropdownMenuContent>{' '}
+        </DropdownMenuContent>
         <AlertDialogContent>
           <AlertDialogHeader>
             <AlertDialogTitle>
@@ -67,7 +76,7 @@ export default function LoggedInButton(props: LoggedInButton) {
             <AlertDialogCancel asChild>
               <Button variant="secondary">Cancel</Button>
             </AlertDialogCancel>
-            <Button variant="destructive">
+            <Button variant="destructive" onClick={() => mutation.mutate()}>
               {mutation.isPending ? (
                 <Loader className="mr-2" size={12} />
               ) : (
