@@ -22,7 +22,7 @@ import Link from 'next/link';
 
 import { PaginationButton } from '@/pagination/PaginationButton';
 import { Typography } from '@/components/ui/Typography';
-import { getCourse } from './course.query';
+import { getAdminCourse } from './course.query';
 
 export default async function CoursePage({
   params,
@@ -37,7 +37,7 @@ export default async function CoursePage({
 
   const session = await getRequiredAuthSession();
 
-  const course = await getCourse({
+  const course = await getAdminCourse({
     courseId: params.courseId,
     userId: session.user.id,
     userPage: page,
