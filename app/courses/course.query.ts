@@ -22,6 +22,15 @@ export const getCourses = async (userId?: string) => {
           name: true,
         },
       },
+      users: {
+        select: {
+          id: true,
+          userId: true,
+          courseId: true,
+          createdAt: true,
+          canceledAt: true,
+        },
+      },
     },
   });
 };

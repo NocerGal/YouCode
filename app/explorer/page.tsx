@@ -5,13 +5,13 @@ import {
   LayoutTitle,
 } from '@/components/layout/layout';
 
-import { CourseCard } from '../courses/page';
-import { prisma } from '@/lib/prisma';
+import { CourseCard } from '../courses/CourseCard';
+
 import { getCourses } from '../courses/course.query';
 
 export type pageProps = {};
 
-export default async function ExplorerPage(props: pageProps) {
+export default async function ExplorerPage() {
   const courses = await getCourses();
 
   return (

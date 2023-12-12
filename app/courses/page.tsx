@@ -1,41 +1,35 @@
-import { Typography } from '@/components/ui/Typography';
-import { Avatar, AvatarFallback, AvatarImage } from '@/components/ui/avatar';
-import { Card, CardHeader, CardTitle } from '@/components/ui/card';
+import {
+  Layout,
+  LayoutContent,
+  LayoutHeader,
+  LayoutTitle,
+} from '@/components/layout/layout';
 
-import Link from 'next/link';
-import { CoursesCard } from './course.query';
+import { CourseCard } from '../courses/CourseCard';
 
-export type CourseCardProps = {
-  course: CoursesCard;
-};
+import { getCourses } from '../courses/course.query';
 
-export const CourseCard = (props: CourseCardProps) => {
+import { getAuthSession } from '@/lib/auth';
+import NotAuthentificatedCard from '@/features/error/NotAuthentifacedCard';
+
+export default async function CoursesPage() {
+  const session = await getAuthSession();
+  const courses = await getCourses(session?.user.id);
+
+  if (!session) {
+    return NotAuthentificatedCard;
+  }
+
   return (
-    <Link href={`/courses/${props.course.id}`}>
-      <Card className="hover:bg-accent">
-        <CardHeader className="flex flex-row gap-3 space-y-0">
-          <Avatar className="h-14 w-14 rounded">
-            <AvatarFallback>{props.course.name[0]}</AvatarFallback>
-            {props.course.image ? (
-              <AvatarImage src={props.course.image} />
-            ) : null}
-          </Avatar>
-          <div className="flex flex-col gap-3">
-            <CardTitle>{props.course.name}</CardTitle>
-            <div className="flex flex-row gap-2">
-              <Avatar className="h-8 w-8">
-                <AvatarFallback>{props.course.name[0]}</AvatarFallback>
-                {props.course.creator.image ? (
-                  <AvatarImage src={props.course.creator.image} />
-                ) : null}
-              </Avatar>
-              <Typography variant="large" className=" text-muted-foreground">
-                {props.course.creator.name}
-              </Typography>
-            </div>
-          </div>
-        </CardHeader>
-      </Card>
-    </Link>
+    <Layout>
+      <LayoutHeader>
+        <LayoutTitle>Your courses</LayoutTitle>
+      </LayoutHeader>
+      <LayoutContent className="grid grid-cols-1 gap-4 md:grid-cols-2 2xl:grid-cols-3">
+        {courses.map((course) => (
+          <CourseCard course={course} key={course.id}></CourseCard>
+        ))}
+      </LayoutContent>
+    </Layout>
   );
-};
+}
