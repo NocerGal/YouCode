@@ -107,7 +107,7 @@ export default async function CoursePage({
             <Typography>{course._count?.users} users</Typography>
             <Typography>{course._count?.lessons} lessons</Typography>
             <Link
-              href={`/admin/courses/${course.id}/edit`}
+              href={`/admin/courses/${course.id}/lessons`}
               className={buttonVariants({
                 variant: 'outline',
               })}

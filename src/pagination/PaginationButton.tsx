@@ -1,6 +1,7 @@
 'use client';
 
 import { Button } from '@/components/ui/button';
+
 import { useRouter } from 'next/navigation';
 
 export type PaginationButtonProps = {
@@ -11,6 +12,10 @@ export type PaginationButtonProps = {
 
 export const PaginationButton = (props: PaginationButtonProps) => {
   const router = useRouter();
+  const searchParams = new URLSearchParams({
+    page: String(props.page - 1),
+  });
+  console.log(searchParams.toString());
   return (
     <div className="flex gap-2">
       <Button
