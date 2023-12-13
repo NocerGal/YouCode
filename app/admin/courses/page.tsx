@@ -6,7 +6,7 @@ import {
 } from '@/components/layout/layout';
 import { Typography } from '@/components/ui/Typography';
 import { Avatar, AvatarFallback, AvatarImage } from '@/components/ui/avatar';
-import { Button } from '@/components/ui/button';
+
 import { Card, CardContent } from '@/components/ui/card';
 import {
   Table,

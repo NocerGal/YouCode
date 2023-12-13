@@ -20,7 +20,7 @@ import { getRequiredAuthSession } from '@/lib/auth';
 import React from 'react';
 import { getCourseLessons } from './lessons.query';
 import { notFound } from 'next/navigation';
-import { LessonItem } from './LessonItem';
+import { AdminLessonItem } from './AdminLessonItem';
 
 export default async function CourseLessonsPage({
   params,
@@ -48,7 +48,7 @@ export default async function CourseLessonsPage({
           </CardHeader>
           <CardContent className="flex flex-col gap-2">
             {lessons.lessons.map((lesson) => (
-              <LessonItem key={lesson.id} lesson={lesson} />
+              <AdminLessonItem key={lesson.id} lesson={lesson} />
             ))}
           </CardContent>
         </Card>

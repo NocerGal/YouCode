@@ -5,9 +5,8 @@ import {
   LayoutTitle,
 } from '@/components/layout/layout';
 
-import { CourseCard } from '../courses/CourseCard';
-
 import { getCourses } from '../courses/course.query';
+import { CourseCard } from '../courses/CourseCard';
 
 export type pageProps = {};
 

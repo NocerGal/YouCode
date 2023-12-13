@@ -14,12 +14,11 @@ import NotAuthentificatedCard from '@/features/error/NotAuthentifacedCard';
 
 export default async function CoursesPage() {
   const session = await getAuthSession();
-  const courses = await getCourses(session?.user.id);
 
   if (!session) {
     return NotAuthentificatedCard;
   }
-
+  const courses = await getCourses(session.user.id);
   return (
     <Layout>
       <LayoutHeader>

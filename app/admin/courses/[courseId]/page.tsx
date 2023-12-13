@@ -22,7 +22,7 @@ import Link from 'next/link';
 
 import { PaginationButton } from '@/pagination/PaginationButton';
 import { Typography } from '@/components/ui/Typography';
-import { getAdminCourse } from './course.query';
+import { getAdminCourse } from './admin-course.query';
 
 export default async function CoursePage({
   params,
