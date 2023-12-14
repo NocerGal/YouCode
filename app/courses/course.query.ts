@@ -1,6 +1,5 @@
 import { prisma } from '@/lib/prisma';
 import { Prisma } from '@prisma/client';
-import { CourseType } from './[...courseId]/course.query';
 
 export const getCourses = async (userId?: string) => {
   return await prisma.course.findMany({

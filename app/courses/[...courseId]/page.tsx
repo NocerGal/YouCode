@@ -18,10 +18,6 @@ export default async function CoursePage({
 }) {
   const session = await getAuthSession();
 
-  if (!session) {
-    <p>Connectez vous</p>;
-  }
-
   const course = await getCourse({
     courseId: params.courseId,
     userId: session?.user.id,
