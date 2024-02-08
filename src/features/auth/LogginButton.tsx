@@ -18,9 +18,9 @@ export const LogginButton = () => {
       onClick={() => mutation.mutate()}
     >
       {mutation.isPending ? (
-        <Loader className="mr-2" size={12} />
+        <Loader className="mr-2" size={16} />
       ) : (
-        <LogIn className="mr-2" size={12} />
+        <LogIn className="mr-2" size={16} />
       )}
       Login
     </Button>

@@ -21,7 +21,8 @@ export default function RootLayout({ children }: PropsWithChildren) {
   return (
     <>
       <html lang="en" className="h-full" suppressHydrationWarning>
-        <head />
+        {/* <head /> */}
+
         <body
           className={cn(
             'h-full bg-background font-sans antialiased',

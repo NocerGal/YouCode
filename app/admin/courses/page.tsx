@@ -30,6 +30,8 @@ export default async function CoursesPage() {
       creatorId: session.user.id,
     },
   });
+
+  console.log('uc');
   return (
     <Layout>
       <LayoutHeader>
