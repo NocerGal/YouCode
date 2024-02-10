@@ -5,25 +5,28 @@ export const action = createSafeActionClient();
 
 export class ServerError extends Error {}
 
+export class ActionError extends Error {
+  constructor(message: string) {
+    super(message);
+  }
+}
+
 export const authenticatedAction = createSafeActionClient({
-  handleReturnedServerError: (error) => {
-    if (error instanceof ServerError) {
-      return {
-        serverError: error.message,
-      };
+  handleReturnedServerError: (e) => {
+    if (e instanceof ActionError) {
+      return e.message;
     }
 
-    return {
-      serverError: 'An unexpected error occurred',
-    };
+    return 'An unexpected error occurred.';
   },
+
   middleware: async () => {
     const session = await getAuthSession();
 
     const user = session?.user;
     const userId = user?.id;
 
-    if (!session) {
+    if (!userId) {
       throw new ServerError('You must be logged in to perform this action');
     }
 

@@ -39,7 +39,7 @@ export default async function CourseLessonsPage({
   return (
     <Layout>
       <LayoutHeader>
-        <LayoutTitle>Lessons . {lessons?.name}</LayoutTitle>
+        <LayoutTitle>Lessons : {lessons?.name}</LayoutTitle>
       </LayoutHeader>
       <LayoutContent className="flex flex-col gap-4 lg:flex-row">
         <Card className="flex-[2]">

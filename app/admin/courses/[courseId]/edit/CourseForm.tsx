@@ -16,7 +16,7 @@ import { Textarea } from '@/components/ui/textarea';
 import Link from 'next/link';
 import { useRouter } from 'next/navigation';
 import { toast } from 'sonner';
-import { courseActionEdit } from './course.action';
+import { courseActionCreate, courseActionEdit } from './course.action';
 import { CourseFormSchema } from './course.schema';
 
 export type CourseFormProps = {
@@ -35,30 +35,26 @@ export const CourseForm = ({ defaultValue }: CourseFormProps) => {
   return (
     <Form
       form={form}
+      className="flex flex-col gap-4 p-4"
       onSubmit={async (values) => {
-        console.log(values);
+        const { data, serverError } = defaultValue?.id
+          ? await courseActionEdit({
+              courseId: defaultValue.id,
+              data: values,
+            })
+          : await courseActionCreate(values);
 
-        if (defaultValue?.id) {
-          console.log('Update course');
-          const { data, serverError } = await courseActionEdit({
-            courseId: defaultValue.id,
-            data: values,
-          });
-
-          if (data) {
-            toast.success(data);
-            router.push(`/admin/courses/${defaultValue.id}`);
-            router.refresh();
-            return;
-          }
-
-          toast.error('Some error occurred', {
-            description: serverError,
-          });
+        if (data) {
+          toast.success(data.message);
+          router.push(`/admin/courses/${data.course.id}`);
+          router.refresh();
           return;
-        } else {
-          // create course
         }
+
+        toast.error('Some error occurred', {
+          description: serverError,
+        });
+        return;
       }}
     >
       <FormField
@@ -71,8 +67,8 @@ export const CourseForm = ({ defaultValue }: CourseFormProps) => {
               <Input placeholder="https://googleimage.com" {...field} />
             </FormControl>
             <FormDescription>
-              Host and use an image. You can use{' '}
-              <Link href="https://imgur.com">Imgur</Link> to host your image.
+              Host and use an image. You can use
+              <Link href="https://imgur.com">Image</Link> to host your image.
             </FormDescription>
             <FormMessage />
           </FormItem>

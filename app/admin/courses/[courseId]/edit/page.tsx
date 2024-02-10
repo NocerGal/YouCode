@@ -52,8 +52,6 @@ export default async function EditCoursePage({
     notFound();
   }
 
-  const handleSubmit = () => {};
-
   return (
     <Layout>
       <LayoutHeader>
