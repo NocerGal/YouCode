@@ -52,7 +52,6 @@ export default async function CoursesPage() {
                       <Avatar className="rounded">
                         <AvatarFallback>{course.name[0]}</AvatarFallback>
                         {course.image && (
-                          // eslint-disable-next-line @next/next/no-img-element
                           <AvatarImage src={course.image} alt={course.name} />
                         )}
                       </Avatar>

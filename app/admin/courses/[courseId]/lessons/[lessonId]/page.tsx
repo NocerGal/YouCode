@@ -13,6 +13,7 @@ import { getAdminLesson } from './lesson.query';
 import { LessonDetails } from './form/LessonDetailsForm';
 import Link from 'next/link';
 import { buttonVariants } from '@/components/ui/button';
+import { MdxEditor } from './content/MdxEditor';
 
 export default async function CourseLessonsPage({
   params,
@@ -26,7 +27,7 @@ export default async function CourseLessonsPage({
   if (!lesson) return notFound();
 
   return (
-    <Layout>
+    <Layout className="max-w-5xl">
       <LayoutHeader>
         <LayoutTitle>{lesson.name}</LayoutTitle>
       </LayoutHeader>
@@ -39,12 +40,20 @@ export default async function CourseLessonsPage({
         </Link>
       </LayoutAction>
       <LayoutContent className="flex flex-col gap-4 lg:flex-row">
-        <Card className="flex-[2]">
+        <Card className="flex-1">
           <CardHeader>
             <CardTitle>Details</CardTitle>
           </CardHeader>
           <CardContent className="flex flex-col gap-2">
             <LessonDetails defaultValue={lesson} />
+          </CardContent>
+        </Card>
+        <Card className="flex-[3]">
+          <CardHeader>
+            <CardTitle>Content</CardTitle>
+          </CardHeader>
+          <CardContent className="flex flex-col gap-2">
+            <MdxEditor markdown={lesson.content} lessonId={lesson.id} />
           </CardContent>
         </Card>
       </LayoutContent>

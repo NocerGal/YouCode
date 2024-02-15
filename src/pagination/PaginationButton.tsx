@@ -15,13 +15,14 @@ export const PaginationButton = (props: PaginationButtonProps) => {
   const searchParams = new URLSearchParams({
     page: String(props.page - 1),
   });
-  console.log(searchParams.toString());
+
   return (
     <div className="flex gap-2">
       <Button
         variant="outline"
         size="sm"
         onClick={() => {
+          if (props.page === 0) return;
           const searchParams = new URLSearchParams({
             page: String(props.page - 1),
           });
@@ -35,6 +36,7 @@ export const PaginationButton = (props: PaginationButtonProps) => {
         variant="outline"
         size="sm"
         onClick={() => {
+          if (Math.ceil(props.totalPage / 5) === props.page + 1) return;
           const searchParams = new URLSearchParams({
             page: String(props.page + 1),
           });
