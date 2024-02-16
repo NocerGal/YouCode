@@ -18,7 +18,7 @@ export default async function CoursePage({
     userId: session?.user.id,
   });
 
-  await new Promise((resolve) => setTimeout(resolve, 3000));
+  // await new Promise((resolve) => setTimeout(resolve, 3000));
 
   if (!course) {
     notFound();

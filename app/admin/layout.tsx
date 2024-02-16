@@ -6,7 +6,6 @@ export default function AdminLayout({ children }: PropsWithChildren) {
   return (
     <>
       <div className="w-full border-b border-border/20">
-        {/* Ajout de flex */}
         <div className="m-auto flex max-w-3xl items-center gap-2 px-4 py-1">
           <BackButton variant="ghost" size="sm">
             Back

@@ -4,7 +4,7 @@ import { Card, CardContent, CardHeader, CardTitle } from '@/components/ui/card';
 import { CourseType } from './course.query';
 
 import { Typography } from '@/components/ui/Typography';
-import { LessonItem } from './lessons/[...lessonId]/LessonItem';
+import { LessonItem } from './lessons/[lessonId]/LessonItem';
 import { MarkDownProse } from '@/features/mdx/MarkDownProse';
 
 import { SubmitButton } from '@/components/form/SubmitButton';
@@ -20,6 +20,7 @@ export type CourseProps = {
 
 export const Course = ({ course, userId }: CourseProps) => {
   const isLogin = Boolean(userId);
+
   return (
     <div className="flex flex-col items-start gap-4">
       <div className="flex w-full flex-col items-start gap-4 lg:flex-row">
@@ -59,54 +60,51 @@ export const Course = ({ course, userId }: CourseProps) => {
           </CardContent>
         </Card>
       </div>
+
+      {course.isCanceled ? <p>You can't join this course.</p> : null}
       {!course.isCanceled && !course.isEnrolled && isLogin ? (
-        <Card>
-          <CardHeader>
-            <CardTitle>Actions</CardTitle>
-          </CardHeader>
-          <CardContent>
-            <form>
-              <SubmitButton
-                formAction={async () => {
-                  'use server';
+        <div className="p-1">
+          <form>
+            <SubmitButton
+              formAction={async () => {
+                'use server';
 
-                  const session = await getRequiredAuthSession();
+                const session = await getRequiredAuthSession();
 
-                  const courseOnUser = await prisma.courseOnUser.create({
-                    data: {
-                      userId: session.user.id,
-                      courseId: course.id,
-                    },
-                    select: {
-                      course: {
-                        select: {
-                          id: true,
-                          lessons: {
-                            orderBy: {
-                              rank: 'asc',
-                            },
-                            take: 1,
-                            select: { id: true },
+                const courseOnUser = await prisma.courseOnUser.create({
+                  data: {
+                    userId: session.user.id,
+                    courseId: course.id,
+                  },
+                  select: {
+                    course: {
+                      select: {
+                        id: true,
+                        lessons: {
+                          orderBy: {
+                            rank: 'asc',
                           },
+                          take: 1,
+                          select: { id: true },
                         },
                       },
                     },
-                  });
-                  const lesson = courseOnUser.course.lessons[0];
+                  },
+                });
+                const lesson = courseOnUser.course.lessons[0];
 
-                  revalidatePath(`/course/${course.id}`);
-                  if (!lesson) {
-                    return;
-                  }
+                revalidatePath(`/course/${course.id}`);
+                if (!lesson) {
+                  return;
+                }
 
-                  redirect(`/courses/${course.id}/lessons/${lesson.id}`);
-                }}
-              >
-                Join
-              </SubmitButton>
-            </form>
-          </CardContent>
-        </Card>
+                redirect(`/courses/${course.id}/lessons/${lesson.id}`);
+              }}
+            >
+              Join
+            </SubmitButton>
+          </form>
+        </div>
       ) : null}
     </div>
   );

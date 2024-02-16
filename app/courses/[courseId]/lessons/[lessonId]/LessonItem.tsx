@@ -2,7 +2,7 @@ import { Typography } from '@/components/ui/Typography';
 import { Badge } from '@/components/ui/badge';
 
 import { CourseLessonItem } from '../../course.query';
-import { CheckCircle, Circle, CircleDashed } from 'lucide-react';
+import { CheckCircle, Circle, CircleDashed, Globe } from 'lucide-react';
 import Link from 'next/link';
 
 export type LessonItemProps = {
@@ -30,7 +30,10 @@ export const LessonItem = ({ lesson }: LessonItemProps) => {
         <Typography variant="small" className="flex-1">
           {lesson.name}
         </Typography>
-        <Badge className="ml-auto">{lesson.state}</Badge>
+
+        {lesson.state === 'PUBLIC' ? (
+          <Globe size={12} className="ml-auto" />
+        ) : null}
       </div>
     </Link>
   );

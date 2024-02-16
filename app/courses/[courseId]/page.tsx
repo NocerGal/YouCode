@@ -23,6 +23,8 @@ export default async function CoursePage({
     userId: session?.user.id,
   });
 
+  await new Promise((resolve) => setTimeout(resolve, 5000));
+
   if (!course) {
     notFound();
   }
@@ -30,7 +32,7 @@ export default async function CoursePage({
   return (
     <Layout>
       <LayoutHeader>
-        <LayoutTitle>Your courses</LayoutTitle>
+        <LayoutTitle>Course</LayoutTitle>
       </LayoutHeader>
       <LayoutContent>
         <Course course={course} userId={session?.user.id} />
