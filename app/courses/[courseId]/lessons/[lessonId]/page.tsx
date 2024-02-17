@@ -6,6 +6,9 @@ import { notFound } from 'next/navigation';
 import { prisma } from '@/lib/prisma';
 import { SubmitButton } from '@/components/form/SubmitButton';
 import { handleLessonState } from './lesson.action';
+import { Button } from '@/components/ui/button';
+import { PanelLeftClose } from 'lucide-react';
+import { OperLessonNavigationButton } from './OpenLessonNavigationButton';
 
 export default async function LessonPage({
   params: { lessonId, courseId },
@@ -51,10 +54,10 @@ export default async function LessonPage({
 
   return (
     <Card className="flex-1">
-      <CardHeader>
+      <CardHeader className="flex-row items-center gap-2 space-y-0">
+        <OperLessonNavigationButton />
         <CardTitle>{lesson.name}</CardTitle>
       </CardHeader>
-
       <CardContent>
         <MdxProse markdown={lesson.content} />
         <form className="m-auto flex max-w-2xl flex-row-reverse">

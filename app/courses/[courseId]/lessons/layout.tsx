@@ -1,5 +1,5 @@
 import React, { PropsWithChildren, Suspense } from 'react';
-import { LessonNavigation } from './[lessonId]/LessonNavigation';
+import { LessonNavigation } from './LessonNavigation';
 import { LessonNavigationSkeleton } from './LessonNavigationSkeleton';
 
 export default function lessons({
@@ -7,7 +7,7 @@ export default function lessons({
   params,
 }: PropsWithChildren<{ params: { courseId: string } }>) {
   return (
-    <div className="flex items-start gap-4 p-4">
+    <div className="relative flex items-start gap-4 p-4">
       <Suspense fallback={<LessonNavigationSkeleton />}>
         <LessonNavigation courseId={params.courseId} />
       </Suspense>
