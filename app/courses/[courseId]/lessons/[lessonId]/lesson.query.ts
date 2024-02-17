@@ -33,7 +33,7 @@ export const getLesson = async (
     return null;
   }
 
-  return lesson;
+  return { ...lesson, progress: lesson.users[0]?.progress ?? 'NOT_STARTED' };
 };
 
 export type LessonType = NonNullable<

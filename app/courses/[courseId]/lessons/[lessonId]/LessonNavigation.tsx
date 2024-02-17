@@ -1,6 +1,6 @@
 import { Card, CardContent, CardHeader, CardTitle } from '@/components/ui/card';
 import { getAuthSession } from '@/lib/auth';
-import { LessonItem } from './LessonItem';
+import { LessonItem } from '../LessonItem';
 import { getCourse } from '../../course.query';
 
 export type LessonNavigationProps = {

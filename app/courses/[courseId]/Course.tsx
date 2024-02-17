@@ -4,7 +4,7 @@ import { Card, CardContent, CardHeader, CardTitle } from '@/components/ui/card';
 import { CourseType } from './course.query';
 
 import { Typography } from '@/components/ui/Typography';
-import { LessonItem } from './lessons/[lessonId]/LessonItem';
+import { LessonItem } from './lessons/LessonItem';
 import { MarkDownProse } from '@/features/mdx/MarkDownProse';
 
 import { SubmitButton } from '@/components/form/SubmitButton';

@@ -3,7 +3,7 @@ import { Card, CardContent, CardHeader, CardTitle } from '@/components/ui/card';
 import Loader from '@/components/ui/loader';
 
 import { Skeleton } from '@/components/ui/skeleton';
-import { LessonItemPlaceholder } from './lessons/[lessonId]/LessonItemPlaceHolder';
+import { LessonItemPlaceholder } from './lessons/LessonItemPlaceHolder';
 
 export const CoursePlaceholder = () => {
   return (

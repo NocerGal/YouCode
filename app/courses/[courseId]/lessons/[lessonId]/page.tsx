@@ -1,37 +1,79 @@
+import { Card, CardContent, CardHeader, CardTitle } from '@/components/ui/card';
 import { getLesson } from './lesson.query';
+import { MdxProse } from './MdxProse';
 import { getAuthSession } from '@/lib/auth';
-import { prisma } from '@/lib/prisma';
 import { notFound } from 'next/navigation';
-import { LessonNavigation } from './LessonNavigation';
-import { Lesson } from './Lesson';
-import {
-  Layout,
-  LayoutContent,
-  LayoutHeader,
-  LayoutTitle,
-} from '@/components/layout/layout';
-import { buttonVariants } from '@/components/ui/button';
-
-import { Suspense } from 'react';
-import { LessonNavigationSkeleton } from './LessonNavigationSkeleton';
-import { LessonSkeleton } from './LessonSkeleton';
+import { prisma } from '@/lib/prisma';
+import { SubmitButton } from '@/components/form/SubmitButton';
+import { handleLessonState } from './lesson.action';
 
 export default async function LessonPage({
-  params,
+  params: { lessonId, courseId },
 }: {
   params: {
     lessonId: string;
     courseId: string;
   };
 }) {
-  await new Promise((resolve) => setTimeout(resolve, 2000));
+  const session = await getAuthSession();
+  const lesson = await getLesson(lessonId, session?.user.id);
+
+  if (!lesson) {
+    notFound();
+  }
+
+  const isAuthorized = await prisma.course.findUnique({
+    where: {
+      id: courseId,
+    },
+    select: {
+      users: {
+        where: {
+          userId: session?.user.id ?? '-',
+          canceledAt: null,
+        },
+      },
+    },
+  });
+
+  if (lesson?.state !== 'PUBLIC' && !isAuthorized?.users.length) {
+    throw new Error('Unauthorized');
+  }
+
+  // if (lesson.users.length === 0 && session?.user.id) {
+  //   await prisma.lessonOnUser.create({
+  //     data: {
+  //       userId: session?.user.id,
+  //       lessonId: lesson.id,
+  //     },
+  //   });
+  // }
+
   return (
-    <div className="flex items-start gap-4 p-4">
-      <Suspense fallback={<LessonNavigationSkeleton />}>
-        <LessonNavigation courseId={params.courseId} />
-      </Suspense>
-      <Suspense fallback={<LessonSkeleton />}></Suspense>
-      <Lesson {...params} />
-    </div>
+    <Card className="flex-1">
+      <CardHeader>
+        <CardTitle>{lesson.name}</CardTitle>
+      </CardHeader>
+
+      <CardContent>
+        <MdxProse markdown={lesson.content} />
+        <form className="m-auto flex max-w-2xl flex-row-reverse">
+          <SubmitButton
+            formAction={async () => {
+              'use server';
+              await handleLessonState({
+                lessonId: lesson.id,
+                progress:
+                  lesson.progress === 'COMPLETED' ? 'IN_PROGRESS' : 'COMPLETED',
+              });
+            }}
+          >
+            {lesson.progress === 'COMPLETED'
+              ? 'Mark as in progress'
+              : 'Completed'}
+          </SubmitButton>
+        </form>
+      </CardContent>
+    </Card>
   );
 }
